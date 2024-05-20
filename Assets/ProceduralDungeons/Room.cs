@@ -70,7 +70,7 @@ public class Room : MonoBehaviour
         activated = true;
 
         // For now generate random color
-        Instantiate(room_intro_prefab, GameManager.Instance.GetPlayerHud().transform);
+        //Instantiate(room_intro_prefab, GameManager.Instance.GetPlayerHud().transform);
 
         // Activate room systems
         foreach(Transform child in transform)
