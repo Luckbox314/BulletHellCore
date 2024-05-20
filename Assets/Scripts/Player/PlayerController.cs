@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -217,10 +218,13 @@ public class PlayerController : MonoBehaviour
             PartySlot center_slot = null;
             if (merc.gameObject == party_leader.gameObject)
             {
-                GameManager.Instance.GameOver();
+                EmptyProjectiles();
+                EmptyParty();
+                GameManager.Instance.Lose();
+                return;
 
                 // TODO: Switch party leaders 
-                foreach(PartySlot slot in party_slots) 
+                foreach (PartySlot slot in party_slots) 
                 { 
                     if (party_leader != null)
                     {
@@ -244,7 +248,9 @@ public class PlayerController : MonoBehaviour
                 else
                 {
                     // Lose
-                    GameManager.Instance.GameOver();
+                    EmptyParty();
+                    GameManager.Instance.Lose();
+
                 }
             }
 
@@ -255,6 +261,23 @@ public class PlayerController : MonoBehaviour
         {
             yield return new WaitForSeconds(duration);
             merc.GetComponent<Unit>().Die();
+        }
+    }
+
+    private void EmptyProjectiles()
+    {
+        foreach (Projectile projectile in FindObjectsOfType<Projectile>())
+        {
+            Destroy(projectile);
+        }
+        
+    }
+
+    void EmptyParty()
+    {
+        foreach (PartySlot party_slot in party_slots)
+        {
+            Destroy(party_slot.merc);
         }
     }
 

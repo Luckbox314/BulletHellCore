@@ -48,9 +48,10 @@ public class Spawner : MonoBehaviour
             else
             {
                 // TODO: Next level / Game over
-                GameManager.Instance.GameOver();
+                GameManager.Instance.Win();
 
                 Debug.Log("Level Complete");
+                Destroy(this);
             }
         }
     }

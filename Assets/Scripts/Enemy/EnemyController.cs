@@ -42,6 +42,8 @@ public class EnemyController : MonoBehaviour
         Debug.Assert(drop_particles != null);
         Debug.Assert(tick_rate > 0.0f, "Cannot have a tick rate of 0 or less!");
 
+        m_score_manager = FindObjectOfType<ScoreManager>();
+
         // Handles
         m_unit = GetComponent<Unit>();
 
@@ -180,6 +182,9 @@ public class EnemyController : MonoBehaviour
         {
             Instantiate(attrib, transform.position, Quaternion.identity);
         }
+
+        // Add health to score
+        m_score_manager.AddScore(Mathf.FloorToInt(m_unit.BaseStats.health));
     }
 
     // ~ AI
@@ -191,4 +196,7 @@ public class EnemyController : MonoBehaviour
    
     // ~ Handles
     private Unit m_unit;
+
+    // Score 
+    private ScoreManager m_score_manager;
 }

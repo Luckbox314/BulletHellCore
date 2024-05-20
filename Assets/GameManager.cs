@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     int room_count = 0;
 
+    public bool game_won = false;
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -253,9 +255,35 @@ public class GameManager : MonoBehaviour
             room.GenerateRoom();
         }
     }
-    public void GameOver()
+    
+    public void Lose() // Triggers the lose menu
     {
+        StopAllCoroutines();
+        GetPlayerHud();
+        IndefinedStop();
+        Debug.Log("LOSE!");
+        game_won = false;
+        in_game_menu.ToggleMenu("GameOverMenu");
+    }
+
+    public void Win() // Triggers the win menu
+    {
+        StopAllCoroutines();
+        IndefinedStop();
+        foreach (Projectile projectile in FindObjectsOfType<Projectile>())
+        {
+            Destroy(projectile);
+        }
+        Debug.Log("WIN!");
+        game_won = true;
+        in_game_menu.ToggleMenu("GameOverMenu");
+    }
+    public void GameOver() // Resets the game
+    {
+        Debug.Log("Restarting Game");
+        game_won = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        ContinueTime();
     }
 
     // ~ Camera Effects

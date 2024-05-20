@@ -12,6 +12,7 @@ public class PauseMenu : Menu
     protected override void OnActivate()
     {
         gameManager = FindObjectOfType<GameManager>();
+        GameManager.Instance.GetPlayerHud().gameObject.SetActive(false);
 
         Debug.Assert(gameManager != null, "No GameManager found");
         Debug.Assert(virtual_camera != null, "No camera selected");
@@ -30,6 +31,7 @@ public class PauseMenu : Menu
 
     protected override void OnDeactivate()
     {
+        GameManager.Instance.GetPlayerHud().gameObject.SetActive(true);
         gameManager.ContinueTime();
 
         virtual_camera.m_Lens.OrthographicSize = m_default_orthographic_size;

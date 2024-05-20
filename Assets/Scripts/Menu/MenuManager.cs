@@ -94,12 +94,15 @@ public class MenuManager : Menu
 
     public void ToggleMenu(string menu_name, bool deactivate_others = true)
     {
+        bool found = false;
         foreach (Menu menu in menus) 
         { 
             if (menu.name != menu_name)
             {
                 continue;
             }
+
+            found = true;
 
             if (!menu.isActiveAndEnabled)
             {
@@ -110,6 +113,8 @@ public class MenuManager : Menu
                 DeactivateMenu(menu);
             }
         }
+
+        Debug.Assert(found, "No menu found with name: " + menu_name);
     }
 
     public Menu FindMenu(string menu_name)
